@@ -1,0 +1,154 @@
+{
+  "name": "@valtioinc/valtio-react-native-sdk",
+  "description": "Valtio React Native SDK",
+  "version": "0.0.0-semantically-released",
+  "license": "MIT",
+  "author": "Valtio Inc",
+  "homepage": "https://valtio.io",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/valtioinc/valtio-react-native-sdk.git"
+  },
+  "keywords": [
+    "valtio",
+    "sdk",
+    "react-native",
+    "ios",
+    "android"
+  ],
+  "source": "./src/index.tsx",
+  "main": "./lib/commonjs/index.js",
+  "module": "./lib/module/index.js",
+  "files": [
+    "lib",
+    "android",
+    "ios",
+    "cpp",
+    "*.podspec",
+    "react-native.config.js",
+    "!ios/build",
+    "!android/build",
+    "!android/gradle",
+    "!android/gradlew",
+    "!android/gradlew.bat",
+    "!android/local.properties",
+    "!**/__tests__",
+    "!**/__fixtures__",
+    "!**/__mocks__",
+    "!**/.*"
+  ],
+  "exports": {
+    ".": {
+      "import": {
+        "types": "./lib/typescript/module/src/index.d.ts",
+        "default": "./lib/module/index.js"
+      },
+      "require": {
+        "types": "./lib/typescript/commonjs/src/index.d.ts",
+        "default": "./lib/commonjs/index.js"
+      }
+    }
+  },
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/",
+    "access": "public"
+  },
+  "scripts": {
+    "clean": "rm -rf ./lib ./android ./ios ./coverage",
+    "prepack": "yarn clean && bob build",
+    "typecheck": "tsc",
+    "lint": "eslint \"{src,tests}/**/*.{js,ts,tsx}\"",
+    "format": "prettier --ignore-path .gitignore --write \"**/*.+(js|ts|json)\"",
+    "test": "jest",
+    "test:coverage": "jest --coverage",
+    "sca": "audit-ci --config .audit-ci.jsonc --report-type summary",
+    "sca:fix": "yarn-audit-fix",
+    "release": "release-it"
+  },
+  "packageManager": "yarn@4.3.0",
+  "dependencies": {
+    "react-native": "0.74.5",
+    "react-native-webview": "13.8.6"
+  },
+  "devDependencies": {
+    "@commitlint/cli": "^19.5.0",
+    "@commitlint/config-conventional": "^19.5.0",
+    "@commitlint/prompt-cli": "^19.5.0",
+    "@release-it/conventional-changelog": "^9.0.2",
+    "@semantic-release/commit-analyzer": "^13.0.0",
+    "@semantic-release/github": "^11.0.1",
+    "@semantic-release/npm": "^12.0.1",
+    "@semantic-release/release-notes-generator": "^14.0.1",
+    "@types/jest": "^29.5.5",
+    "@types/react": "^18.3.0",
+    "@types/react-dom": "^18.3.0",
+    "audit-ci": "^7.1.0",
+    "commitlint": "^17.0.2",
+    "eslint": "^8.57.0",
+    "eslint-config-universe": "^13.0.0",
+    "jest": "^29.7.0",
+    "prettier": "^3.3.1",
+    "react": "^18.3.0",
+    "react-native-builder-bob": "^0.35.2",
+    "release-it": "^17.10.0",
+    "semantic-release": "^24.2.0",
+    "typescript": "<5.6.0",
+    "yarn-audit-fix": "^10.1.0"
+  },
+  "peerDependencies": {
+    "react": "*"
+  },
+  "react-native-builder-bob": {
+    "source": "src",
+    "output": "lib",
+    "targets": [
+      [
+        "commonjs",
+        {
+          "esm": true
+        }
+      ],
+      [
+        "module",
+        {
+          "esm": true
+        }
+      ],
+      [
+        "typescript",
+        {
+          "project": "tsconfig.build.json",
+          "esm": true
+        }
+      ]
+    ]
+  },
+  "create-react-native-library": {
+    "languages": "js",
+    "type": "library",
+    "version": "0.45.5"
+  },
+  "jest": {
+    "preset": "react-native",
+    "modulePathIgnorePatterns": [
+      "<rootDir>/lib/"
+    ]
+  },
+  "release-it": {
+    "git": {
+      "commitMessage": "chore: release ${version}",
+      "tagName": "v${version}"
+    },
+    "npm": {
+      "publish": true
+    },
+    "github": {
+      "release": true
+    },
+    "plugins": {
+      "@release-it/conventional-changelog": {
+        "preset": "angular"
+      }
+    }
+  }
+}
