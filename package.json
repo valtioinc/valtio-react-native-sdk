@@ -68,7 +68,7 @@
   "packageManager": "yarn@4.3.0",
   "dependencies": {
     "react-native": "0.74.5",
-    "react-native-webview": "13.8.6"
+    "react-native-webview": "13.6.4"
   },
   "devDependencies": {
     "@commitlint/cli": "^19.5.0",
