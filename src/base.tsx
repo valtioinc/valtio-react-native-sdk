@@ -3,6 +3,7 @@ import { useWindowDimensions, View, Alert } from 'react-native'
 import { WebView } from 'react-native-webview'
 
 export interface ComponentProps {
+  appID: string
   host?: string
   onExit?: (detail: any) => void
   onLoad?: (detail: any) => void
@@ -14,14 +15,21 @@ export interface BaseComponentProps extends ComponentProps {
 }
 
 export const BaseComponent: React.FC<BaseComponentProps> = ({
+  appID,
   host = 'https://app.valtio.io',
   endpoint = '',
   onExit = () => {},
   onLoad = () => {},
   debug = false,
+  ...extras
 }) => {
   let ref: any
-  const url = `${host}/${endpoint}#embedded=true`
+  const params = new URLSearchParams({
+    embedded: 'true',
+    appID,
+    ...extras,
+  })
+  const url = `${host}/${endpoint}#${params.toString()}`
   const [ready, setReady] = React.useState<boolean>(false)
   const { width } = useWindowDimensions()
 

@@ -50,47 +50,54 @@ yarn add @valtioinc/valtio-react-native-sdk
 
 ## Usage
 
-```typescript jsx
-import React from "react";
-import { View } from 'react-native'
-import { ValtioApp } from "@valtioinc/valtio-react-sdk";
-
-function App() {
-    
-  const onExit = () => {
-    // At this point the user has requested to exit the Valtio 
-    // platform and return to your application. You should 
-    // handle this event by either switching screens or 
-    // removing the ValtioApp component
-  }
-  
-  return (
-    <View>
-      <ValtioApp onExit={onExit} />
-    </View>
-  );
-}
-```
-
 #### Example: Show Valtio when user clicks a button
 
 ```typescript jsx
+import React from "react";
+import { View, Text, Button } from 'react-native'
+import { ValtioApp } from "@valtioinc/valtio-react-sdk";
+
 function App() {
   const [showValtio, setShowValtio] = React.useState(false)
 
+  const onShow = () => {
+    /*
+     The user has requested to open the Valtio platform.
+     */
+    setShowValtio(true)
+  }
+  
+  const onHide = () => {
+    /*
+      The user has requested to exit the Valtio platform and return to your application.
+      Handle this event by either switching screens or removing the ValtioApp component.
+     */
+    setShowValtio(false)
+  }
+  
   return (
     <View>
       {!showValtio && (
         <View>
           <Text>Valtio React App Reference Implementation</Text>
-          <Button title="Show Valtio" onPress={() => setShowValtio(!showValtio)} />
+          <Button title="Show Valtio" onPress={onShow} />
         </View>
       )}
-      {showValtio && <ValtioApp onExit={() => setShowValtio(false)} />}
+      {showValtio && (
+        <ValtioApp
+          appID="75a8c8a8-8763-4590-ab5b-4d5278d41724"
+          userFirstName="John"
+          userLastName="Doe"
+          userEmail="john.doe@example.com"
+          userLanguage="en"
+          onExit={onHide}
+        />
+      )}
     </View>
   )
 }
 ```
+
 ***
 
 ## Author
