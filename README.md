@@ -1,4 +1,4 @@
-<h1 align="center">🛡Valtio React SDK</h1>
+<h1 align="center">🛡Valtio React Native SDK</h1>
 <h3 align="center">SDK for embedding Valtio UI elements into React Native applications.</h3>
 <p align="center">
   <a href="https://www.npmjs.com/package/@valtioinc/valtio-react-sdk">
