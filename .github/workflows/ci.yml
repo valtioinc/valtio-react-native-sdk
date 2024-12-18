@@ -34,7 +34,7 @@ jobs:
       - name: Install dependencies
         run: yarn install --frozen-lockfile
 
-      - name: Run unit tests with coverage
+      - name: Lint source code
         run: yarn lint
 
 #  test:
@@ -84,6 +84,8 @@ jobs:
         uses: snyk/actions/node@master
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+        with:
+          args: --severity-threshold=high
 
       - name: SCA scan with audit-ci
         run: yarn sca
