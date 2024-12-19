@@ -2,10 +2,11 @@ import React from 'react'
 import { BaseComponent, type ComponentProps } from './base'
 
 interface ValtioAppProps extends ComponentProps {
-  userFirstName?: string
-  userLastName?: string
-  userEmail?: string
-  userLanguage?: string
+  user: {
+    first_name?: string
+    last_name?: string
+    email?: string
+  }
 }
 
 export const ValtioApp: React.FC<ValtioAppProps> = (props) => {

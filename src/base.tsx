@@ -1,13 +1,15 @@
 import React from 'react'
 import { useWindowDimensions, View, Alert } from 'react-native'
 import { WebView } from 'react-native-webview'
+import { flattenObject } from './utils'
 
 export interface ComponentProps {
   appID: string
   host?: string
+  language?: string
+  debug?: boolean
   onExit?: (detail: any) => void
   onLoad?: (detail: any) => void
-  debug?: boolean
 }
 
 export interface BaseComponentProps extends ComponentProps {
@@ -24,11 +26,13 @@ export const BaseComponent: React.FC<BaseComponentProps> = ({
   ...extras
 }) => {
   let ref: any
-  const params = new URLSearchParams({
-    embedded: 'true',
-    appID,
-    ...extras,
-  })
+  const params = new URLSearchParams(
+    flattenObject({
+      embedded: 'true',
+      appID,
+      ...extras,
+    })
+  )
   const url = `${host}/${endpoint}#${params.toString()}`
   const [ready, setReady] = React.useState<boolean>(false)
   const { width } = useWindowDimensions()

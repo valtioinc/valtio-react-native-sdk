@@ -54,8 +54,8 @@ yarn add @valtioinc/valtio-react-native-sdk
 
 ```typescript jsx
 import React from "react";
+import { ValtioApp } from "@valtioinc/valtio-react-native-sdk";
 import { View, Text, Button } from 'react-native'
-import { ValtioApp } from "@valtioinc/valtio-react-sdk";
 
 function App() {
   const [showValtio, setShowValtio] = React.useState(false)
@@ -86,17 +86,31 @@ function App() {
       {showValtio && (
         <ValtioApp
           appID="75a8c8a8-8763-4590-ab5b-4d5278d41724"
-          userFirstName="John"
-          userLastName="Doe"
-          userEmail="john.doe@example.com"
-          userLanguage="en"
+          language="en"
           onExit={onHide}
+          user={{
+            first_name: "John",
+            last_name: "Doe",
+            email: "john.doe@example.com"
+          }}
         />
       )}
     </View>
   )
 }
 ```
+### ValtioApp Component Properties
+| Property        | Description                                                                                                                                                                                        | Type         | Required | Default               | 
+|-----------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|--------------|----------|-----------------------|
+| appID           | A unique identifier for your application and your organization. Please contact the Valtio team to request an application ID.                                                                       | string       | Yes      |                       |
+| host            | The host that will be used to load the embedded Valtio experience. Defaults to Valtio's production system, but can also be set to Valtio's sandbox environment (https://app-integration.valtio.io) | string       | No       | https://app.valtio.io |
+| language        | The language preference of the user that will be interacting with the Valtio platform. Currently only English ('en') and Spanish ('es') are supported.                                             | 'en' \| 'es' | No       |
+| debug           | A flag to enable debug logging in the Javascript console.                                                                                                                                          | boolean      | No       | false                 |
+| onLoad          | A callback function that will be invoked when the embedded Valtio experience has finished loading.                                                                                                 | function     | No       |                       |
+| onExit          | A callback function that will be invoked when the user requests to exit the Valtio experience and return to your application.                                                                      | function     | No       |                       |
+| user.first_name | The first name of the user that will be interacting with the Valtio platform. This will be used to autofill fields in the account sign-up flow.                                                    | string       | No       |                       |
+| user.last_name  | The last name of the user that will be interacting with the Valtio platform. This will be used to autofill fields in the account sign-up flow.                                                     | string       | No       |                       |
+| user.email      | The email of the user that will be interacting with the Valtio platform. This will be used to autofill the email in the account authentication / sign-up flow.                                     | string       | No       |                       | 
 
 ***
 
