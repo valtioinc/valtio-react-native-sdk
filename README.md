@@ -79,7 +79,7 @@ function App() {
     <View>
       {!showValtio && (
         <View>
-          <Text>Valtio React App Reference Implementation</Text>
+          <Text>Valtio React Native App Reference Implementation</Text>
           <Button title="Show Valtio" onPress={onShow} />
         </View>
       )}

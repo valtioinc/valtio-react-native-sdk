@@ -1,3 +1,13 @@
+export function isValidUrl(url: string) {
+  try {
+    // eslint-disable-next-line no-new
+    new URL(url)
+    return true
+  } catch {
+    return false
+  }
+}
+
 // $roots keeps previous parent properties as they will be added as a prefix for each prop.
 // $sep is just a preference if you want to seperate nested paths other than dot.
 // @ts-ignore

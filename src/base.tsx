@@ -1,15 +1,15 @@
 import React from 'react'
 import { useWindowDimensions, View, Alert } from 'react-native'
 import { WebView } from 'react-native-webview'
-import { flattenObject } from './utils'
+import { flattenObject, isValidUrl } from './utils'
 
 export interface ComponentProps {
   appID: string
   host?: string
-  language?: string
+  language?: 'en' | 'es'
   debug?: boolean
-  onExit?: (detail: any) => void
   onLoad?: (detail: any) => void
+  onExit?: (detail: any) => void
 }
 
 export interface BaseComponentProps extends ComponentProps {
@@ -20,20 +20,46 @@ export const BaseComponent: React.FC<BaseComponentProps> = ({
   appID,
   host = 'https://app.valtio.io',
   endpoint = '',
+  language = 'en',
   onExit = () => {},
   onLoad = () => {},
   debug = false,
   ...extras
 }) => {
-  let ref: any
+  if (typeof appID !== 'string') {
+    throw new TypeError(`'appID=${appID}' is not valid application ID.`)
+  }
+
+  if (!isValidUrl(host)) {
+    throw new TypeError(`'host=${host}' is not a valid URL.`)
+  }
+
+  if (typeof endpoint !== 'string') {
+    throw new TypeError(`'endpoint=${endpoint}' is not valid URL path.`)
+  }
+
+  if (!['en', 'es'].includes(language)) {
+    throw new TypeError(`'language=${language}' is not a supported language`)
+  }
+
+  if (!(onExit instanceof Function)) {
+    throw new TypeError(`'onExit=${onExit}' is not a valid callback function.`)
+  }
+
+  if (!(onLoad instanceof Function)) {
+    throw new TypeError(`'onLoad=${onLoad}' is not a valid callback function.`)
+  }
+
   const params = new URLSearchParams(
     flattenObject({
       embedded: 'true',
       appID,
+      language,
       ...extras,
     })
   )
   const url = `${host}/${endpoint}#${params.toString()}`
+  let ref: any
   const [ready, setReady] = React.useState<boolean>(false)
   const { width } = useWindowDimensions()
 
